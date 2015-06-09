@@ -1,7 +1,7 @@
 <?php
 $user = "atf";
 $password = "atf";
-$dbname = "recoleccion";
+$dbname = "registro";
 $port = "5432";
 $host = "localhost";
 

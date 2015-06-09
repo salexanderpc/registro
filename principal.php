@@ -83,12 +83,7 @@ $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
                     <li><a href="paciente/AddPaciente.php">Agregar Paciente</a></li>                   
                 </ul>
             </li>
-                <li><a href="/products">Buscar Paciente</a>
-                </li>
-                <li><a href="/about-us">About Us</a>
-                </li>
-                <li><a href="/contact">Contact Us</a>
-                </li>
+                
             </ul>
             <div class="col-md-2 pull-right">
             <ul class="nav navbar-nav">
@@ -119,7 +114,7 @@ $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
                             
                             <div class="col-md-10">
                                 <div class="form-group">
-                                    <label for="Retira" class="col-lg-4 control-label">Retira Medicamento :</label>
+                                    <label for="Retira" class="col-lg-4 control-label">Registro :</label>
                                     <div class="col-lg-8">                                       
                                         <?php echo Retira();?>
                                     </div>
@@ -157,12 +152,6 @@ $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
                                 
                                 
                                 
-                                <div class="form-group">
-                                    <label for="Hospital" class="col-lg-4 control-label">Hospital Referencia :</label>
-                                    <div class="col-lg-8">                                       
-                             
-                                    </div>
-                                </div>
 
                         </div>
                         <div class="col-md-1">
