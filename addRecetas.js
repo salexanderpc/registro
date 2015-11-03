@@ -37,12 +37,9 @@ function acceptNum(evt){
 
                    strNueva_Fila='<tr id="entry'+newNum+'" class="clonado">'+
                            //'<td><input type="text" name="contador" value="'+numero+'" length="1" size = "1"></td>'+
-            '<td>'+newNum+'</td>'+       
-            '<td align="center"><input type="date" class="form-control" name="fecha_programada[]" size="2" required></td>'+
+            '<td class="text-center">'+newNum+'</td>'+       
             '<td>'+data2+'</td>'+
             '<td><input type="text" onKeyPress="return acceptNum(event)"  required  class="form-control" placeholder="cantidad" id="cantidad'+ind+'" name="cantidad[]" size="3" ></td>'+
-            '<td align="left">'+medico+'</td>'+
-            '<td align="left">'+especialidad+'</td>'+
         '</tr>';
                    
 
@@ -52,7 +49,7 @@ function acceptNum(evt){
                      objTabla=$(this).parents().get(3);
                   $(objTabla).find('tbody').append(strNueva_Fila);
 
-$('.choosen').chosen({width:'250',allow_single_deselect: true});
+$('.choosen').chosen({width:'500',allow_single_deselect: true});
 $('.choosen2').chosen({width:'150',allow_single_deselect: true});
 $('.choosen3').chosen({width:'175',allow_single_deselect: true});
    $('input').iCheck({
@@ -96,10 +93,10 @@ $("#datepicker"+ind).datepicker({
     $('#btnDelete').attr('disabled', true);
     
     
-     $(".medicamento1").chosen({width:'250',allow_single_deselect: true,no_results_text:'No hay resultados para '});
+     $(".medicamento1").chosen({width:'500',allow_single_deselect: true,no_results_text:'No hay resultados para '});
     $(".medicamento_imp").chosen({width:'450',allow_single_deselect: true,no_results_text:'No hay resultados para '});
-    $(".medicamento2").chosen({width:'150',allow_single_deselect: true,no_results_text:'No hay resultados para '});
-    $(".medicamento3").chosen({width:'175',allow_single_deselect: true,no_results_text:'No hay resultados para '});
+    $(".medicamento2").chosen({width:'300',allow_single_deselect: true,no_results_text:'No hay resultados para '});
+    $(".medicamento3").chosen({width:'300',allow_single_deselect: true,no_results_text:'No hay resultados para '});
     $(".medicamento4").chosen({width:'100%',allow_single_deselect: true,no_results_text:'No hay resultados para '});
     $(".medicamento5").chosen({width:'100%',allow_single_deselect: true,no_results_text:'No hay resultados para '});
     $(".choosen").chosen({width:'100%',allow_single_deselect: true,no_results_text:'No hay resultados para '});

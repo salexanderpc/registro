@@ -27,7 +27,7 @@ function Especialidad() {
     $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_last_error());
     $query = "select id,nombre_especialidad from especialidades order by nombre_especialidad";
     $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-    $combo = "<select class='form-control medicamento2' data-placeholder=\"Seleccione...\" id='especialidad' name='especialidad[]' width:'auto' required>
+    $combo = "<select class='form-control medicamento2' data-placeholder=\"Seleccione...\" id='especialidad' name='especialidad' width:'auto' required>
 	  ";
     $combo.="<option value=\"\"></option>";
 
@@ -45,7 +45,7 @@ function Medico() {
     $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_last_error());
     $query = "select id,nombre_medico from medicos order by nombre_medico";
     $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-    $combo = "<select class='form-control medicamento3' data-placeholder=\"Seleccione...\" id='medico' name='medicos[]' width:'auto' required>
+    $combo = "<select class='form-control medicamento3' data-placeholder=\"Seleccione...\" id='medico' name='medicos' width:'auto' required>
 	  ";
     $combo.="<option value=\"\"></option>";
 
@@ -60,7 +60,7 @@ function Medico() {
 
 <html>
     <head>
-        <title></title>
+        <title>.:::RECETAS:::.</title>
         <link rel="stylesheet" href="public/validation/vendor/bootstrap/css/bootstrap.css"/>
         <link rel="stylesheet" href="public/validation/dist/css/formValidation.css"/>
         <script type="text/javascript" src="public/validation/vendor/jquery/jquery.min.js"></script>
@@ -90,12 +90,22 @@ function Medico() {
     </head>
     <body>
 <?php echo banner(); ?>
-
+      
+        <div class="container">
+            <div class="row">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">Ingreso</a></li>
+                <li role="presentation"><a href="verificacionRecetas/verificacion.php">Verificación Recetas</a></li>
+                <li role="presentation"><a href="#">Messages</a></li>
+            </ul>
+        </div>
+        </div>
+        
+        <br><br>
         <div class="container">
             <form  method="post" action="guardar/guardar.php" class="form-horizontal">
-
-
-                <div class="col-md-8">
+                <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="numero_expediente" class="col-lg-4 control-label">N° de Expediente :</label>
                         <div class="col-lg-8">
@@ -115,65 +125,99 @@ function Medico() {
                             </div>
                         </div>
                     </div>
-
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-lg-4 control-label">Fecha Programada :</label>
+                        <div class="col-lg-8">
+                            <div class='input-group'>
+                                <span class="input-group-addon" id="start-date" ><i class="fa fa-user-plus fa-adjust" style="color:blue"></i></span>
+                                <input type="date" required="" name="fecha_programada" class="form-control" size="3" placeholder="Ingrese la fecha programada de la receta">
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
-              
+                <div class="col-md-6">
+                    
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-lg-4 control-label">Medico :</label>
+                        <div class="col-lg-8">
+                            <?php echo Medico();?>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-lg-4 control-label">Especialidad :</label>
+                        <div class="col-lg-8">
+                            <?php echo Especialidad();?>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-2">&nbsp;
+                    </div>
+                    <div class="col-md-8">
                         <table class="table table-bordered table-hover">
                                                     <caption><h4>Recetas</h4></caption>
                                                     <thead>
                                                         <tr class="info">
-                                                            <th class="text-center">N°</th>
-                                                            <th class="text-center">Fecha<br>Programada</th>
-                                                            <th class="text-center">Medicamento</th>
-                                                            <th class="text-center">Cantidad</th>
-                                                            <th class="text-center">Médico</th>
-                                                            <th class="text-center">Especialidad</th>
+                                                            <th class="col-md-1 text-center">N°</th>
+                                                            <th class="col-md-6 text-center">Medicamento</th>
+                                                            <th class="col-md-2 text-center">Cantidad</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     
                                                         <tr id="entry1" class="clonado">
-                                                            <td>1</td>    
-                                                            <td><input type="date" required="" name="fecha_programada[]" class="form-control" size="3" placeholder="Ingrese la fecha programada de la receta"></td>
+                                                            <td class="text-center">1</td>    
+                                                          
                                                             <td>
                                                                 <?php echo Medicamento(); ?>
                                                             </td>
                                                             <td>
                                             
-                                            
-                                                
                                                 <input type="text" class="form-control" id="cantidad" name="cantidad[]" placeholder="Cantidad" size="3" required>
-                                               
-                       
                                                             </td>
-                                                            <td><?php echo Medico(); ?></td>
-                                                            <td><?php echo Especialidad(); ?></td>
-                                                            
                                                     </tr>
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <td colspan="2" align="center">
+                                                            <td colspan="1" align="center">
         
                                                                 <button type="button"  class="btn btn-success clsAgregarFila">
                                                                     <i class="fa fa-plus"></i>   Agregar
                                                                 </button>
                                                             </td>
-                                                            <td align="center" colspan="2">
+                                                            <td align="center" colspan="1">
                                                                 <button type="button" id="btnDelete" name="btnDel" class="btn btn-danger"><i class="fa fa-minus-circle fa-adjust"></i> Eliminar</button>
                                                             </td>
-                                                            <td align="center" colspan="2">
+                                                            <td align="center" colspan="1">
 
                                                                 <button type="submit" name="Guardar" class="btn btn-info"><i class="fa fa-minus-circle fa-adjust"></i> Guardar</button>
                                                             </td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
+                    </div>
+                    <div class="col-md-2">&nbsp;
+                    </div>
+                </div>
+
+              
+                        
 
 
 
             </form>
+            <br>
+            <br>
+            <br>
+            
             <div id="respuesta">
             </div>
         </div>
