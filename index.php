@@ -96,7 +96,7 @@ function Medico() {
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#">Ingreso</a></li>
                 <li role="presentation"><a href="verificacionRecetas/verificacion.php">Verificación Recetas</a></li>
-                <li role="presentation"><a href="#">Messages</a></li>
+                <li role="presentation"><a href="mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
             </ul>
         </div>
         </div>

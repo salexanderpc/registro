@@ -7,7 +7,7 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
 $numero_expediente = $_POST['name'];
 
  
-$query = "select  rec.id as id_medicamento,des.id as id_desc, des.fecha_programada,exp.id as id_expediente,
+$query = "select  exp.numero_expediente,rec.id as id_medicamento,des.id as id_desc, des.fecha_programada,exp.id as id_expediente,
 	pac.nombre,m.nombre_medico,esp.nombre_especialidad, med.nombre_medicamento
 	,rec.cantidad from desc_recetas des
 	inner join expediente exp on des.expediente_id = exp.id  
@@ -16,7 +16,7 @@ $query = "select  rec.id as id_medicamento,des.id as id_desc, des.fecha_programa
 	inner join especialidades esp on des.especialidades_id = esp.id
 	inner join recetas_programadas rec on des.id = rec.desc_recetas_id
 	inner join medicamento med on rec.medicamento_id = med.id
-	where exp.numero_expediente = '10-01' and transaccion_id = 1 order by des.fecha_programada,id_desc,med.nombre_medicamento";
+	where exp.numero_expediente = '$numero_expediente' and transaccion_id = 1 order by des.fecha_programada,id_desc,med.nombre_medicamento";
 
 $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
 
@@ -25,15 +25,16 @@ $imp = "<table class=\"table table-bordered table-hover\">
                                                     <thead>
                                                         <tr class=\"info\">
                                                             <th class=\"text-center\">Fecha<br>Programada</th>
-                                                            <th class=\"text-center\">Medicamento</th>
+                                                            <th class=\"col-md-3 text-center\">Medicamento</th>
                                                             <th class=\"text-center\">Cantidad</th>
-                                                            <th class=\"text-center\">Médico</th>
+                                                            <th class=\"col-md-3 text-center\">Médico</th>
                                                             <th class=\"text-center\">Especialidad</th>
-                                                            <th class=\"text-center\">Opción</th>
+                                                            <th colspan=\"2\" class=\"text-center\">Opción</th>
                                                         </tr>
                                                     </thead><tbody>";
 $id_ini=""; $i=0;
 while ($row = pg_fetch_array($resultado)) {
+        $numero_expediente = $row['numero_expediente'];
         $id_medicamento = $row['id_medicamento'];
         $id_desc = $row['id_desc'];
         $id_expediente = $row['id_expediente'];
@@ -50,12 +51,17 @@ while ($row = pg_fetch_array($resultado)) {
         {
            $imp.="<tr>
                 <td>$fecha_programada</td>
-                <td>$medicamento</td>  
+                <td class=\"col-md-4\">$medicamento</td>  
                 <td>$cantidad</td> 
                 <td>$medico</td> 
                 <td>$especialidad</td> 
-                <td><button class=\"btn btn-info\" onclick=\"miFuncion($id_medicamento,$id_expediente,'$expediente')\" type=\"submit\">
-                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Procesar</button></td>    
+                <td><button class=\"btn btn-info\" onclick=\"miFuncion($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Procesar</button>
+                </td>
+                <td>
+                <button class=\"btn btn-danger\" onclick=\"Anular($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Anular</button>
+                </td>    
                 </tr>";
         }
         else
@@ -69,22 +75,29 @@ while ($row = pg_fetch_array($resultado)) {
                 <td>$cantidad</td> 
                 <td>$medico</td> 
                 <td>$especialidad</td> 
-                <td><button class=\"btn btn-info\" type=\"submit\">
-                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Procesar</button></td>
+                <td><button class=\"btn btn-info\" onclick=\"miFuncion($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Procesar</button>
+                </td>
+                <td>
+                <button class=\"btn btn-danger\" onclick=\"Anular($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Anular</button>
+                </td>
                 </tr>";
             }else
             {
-                $imp.="<tr class=\"danger\"><td colspan=\"6\" rowspan=\"\"></td></tr>";
+                $imp.="<tr class=\"danger\"><td colspan=\"7\" rowspan=\"\"></td></tr>";
                 
-                $imp.="<tr class=\"danger\"><td colspan=\"6\"></td></tr>";
+                $imp.="<tr class=\"danger\"><td colspan=\"7\"></td></tr>";
                 $imp.="<tr>
                 <td>$fecha_programada</td>
                 <td>$medicamento</td>  
                 <td>$cantidad</td> 
                 <td>$medico</td> 
                 <td>$especialidad</td> 
-                <td><button class=\"btn btn-info\" type=\"submit\">
-                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Procesar</button></td>    
+                <td><button class=\"btn btn-info\" onclick=\"miFuncion($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Procesar</button></td>   
+                <td><button class=\"btn btn-danger\" onclick=\"Anular($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Anular</button></td> 
                 </tr>";
             }
              

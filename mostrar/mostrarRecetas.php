@@ -32,6 +32,17 @@ include '../include/banner.php';
                 text-align: center;   
             }
         </script>
+        
+        <script language="javascript">
+           $(document).ready(function(){
+setInterval(loadClima,1000);
+});
+
+function loadClima(){
+$("#resultado").load("cargarRecetas.php");
+}
+
+</script>
         <script type="text/javascript">
 			$('document').ready(function(){
 				$('#boton').click(function(){
@@ -114,52 +125,17 @@ include '../include/banner.php';
             <div class="row">
             <ul class="nav nav-tabs">
                 <li role="presentation"><a href="../index.php">Ingreso</a></li>
-                <li role="presentation" class="active"><a href="#">Verificación Recetas</a></li>
-                <li role="presentation"><a href="../mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
+                <li role="presentation"><a href="#">Verificación Recetas</a></li>
+                <li role="presentation" class="active"><a href="../mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
             </ul>
         </div>
         </div>
     
-    
-    <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <br><br>
-
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><strong><center>BUSQUEDA DE PACIENTE</center></strong></h3>
-                    </div>
-                    <div class="panel-body">
-                        <br>
-                        <form  method="post" class="form-horizontal">
-                            <div class="form-group">
-                                <label for="expediente" class="col-md-5 control-label" >N° de Expediente</label>
-                                <div class="col-md-7">
-                                    
-                                    <div class='input-group'>
-                                        <span class="input-group-addon" id="start-date" ><span class="glyphicon glyphicon-list-alt"></span></span>
-                                        <input type="text" class="form-control" id="expediente" name="expediente" placeholder="Ingrese el expediente" required>
-                                    
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <div class="col-sm-offset-5 col-sm-10">
-                                    <button type="button" id="boton" class="btn btn-success">
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+      
 
 
-            </div>
-            <div class="col-md-4"></div>
-        </div>
+        <br>
+        <br>
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10" id="resultado">
