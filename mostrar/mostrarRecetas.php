@@ -125,7 +125,7 @@ $("#resultado").load("cargarRecetas.php");
             <div class="row">
             <ul class="nav nav-tabs">
                 <li role="presentation"><a href="../index.php">Ingreso</a></li>
-                <li role="presentation"><a href="#">Verificación Recetas</a></li>
+                <li role="presentation"><a href="../verificacionRecetas/verificacion.php">Verificación Recetas</a></li>
                 <li role="presentation" class="active"><a href="../mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
             </ul>
         </div>

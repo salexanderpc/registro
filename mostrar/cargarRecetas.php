@@ -35,34 +35,52 @@ $imp="";
 while ($row = pg_fetch_array($resultado)) {
     $nombre_medicamento = $row['nombre_medicamento'];
     $id_des = $row['id_des'];
+    $nombre = $row['nombre'];
+    $num_exp = $row['numero_expediente'];
     $imp.= "<table class=\"table table-bordered table-hover\">
                                                     <caption><button type=\"button\" class=\"btn btn-info\">Despachar Todo</button></caption>
                                                     <thead>
                                                         <tr>
-                                                        <th colspan=\"3\" class=\"success\">
-                                                        Nombre:
+                                                        <th colspan=\"1\" class=\"success\">
+                                                        Nombre :
                                                         </th>
-                                                        <th colspan=\"3\"class=\"success\">N° Expediente: </th>
+                                                        <td class=\"success\" colspan=\"3\">$nombre</td>
+                                                        <th colspan=\"1\" class=\"text-right success\">N° Expediente : </th>
+                                                        <td colspan=\"2\" class=\"success\">$num_exp</td>
                                                         </tr>
                                                         <tr class=\"info\">
-                                                            <th class=\"text-center\">Fecha<br>Programada</th>
-                                                            <th class=\"text-center\">Medicamento</th>
-                                                            <th class=\"text-center\">Cantidad</th>
-                                                            <th class=\"text-center\">Médico</th>
-                                                            <th class=\"text-center\">Especialidad</th>
-                                                            <th class=\"text-center\">Opción</th>
+                                                            <th class=\"col-md-1 text-center\">Fecha<br>Programada</th>
+                                                            <th class=\"col-md-3 text-center\">Medicamento</th>
+                                                            <th class=\"col-md-1 text-center\">Cantidad</th>
+                                                            <th class=\"col-md-3 text-center\">Médico</th>
+                                                            <th class=\"col-md-2 text-center\">Especialidad</th>
+                                                            <th colspan=\"2\" class=\"text-center\">Opción</th>
                                                         </tr>
-                                                    </thead><tbody></tbody></table>";
+                                                    </thead><tbody>";
   
     
     $query_recetas = datosReceta($id_des);
     while ($row2 = pg_fetch_array($query_recetas)) {
         $fecha_programada = $row2['fecha_programada'];
+        $medicamento = $row2['nombre_medicamento'];
+        $cantidad = $row2['cantidad'];
+        $medico = $row2['nombre_medico'];
+        $especialidad = $row2['nombre_especialidad'];
         
             $imp.="<tr>
-        <td>$fecha_programada</td>
+        <td class=\"text-center\">$fecha_programada</td>
+        <td class=\"text-center\">$nombre_medicamento</td>
+        <td class=\"text-center\">$cantidad</td>
+        <td class=\"text-center\">$medico</td>
+        <td class=\"text-center\">$especialidad</td>
+        <td><button class=\"btn btn-info\" onclick=\"miFuncion($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
+                <td><button class=\"btn btn-danger\" onclick=\"Anular($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
             </tr>";
     }
+    
+    $imp.="</tbody></table>";
     
 
        
