@@ -1,3 +1,16 @@
-/* AGREGAR BOTONES ANULAR EN VERIFICACIION luego del post n°2 */
+
 /* Crear funcion para guardar cuando se despacha*/
 /* Crear pantalla para atf */
+/* Crear una pantalla para buscar recetas anuladas por numero de expediente para que se activen */
+
+
+/* Despachar Todo */
+este boton enviara la receta y pondra en true recepcion y el id_transaccion en 2
+
+/* Anular Receta */
+este boton pondra el id_transaccion en 4 Anulada
+
+
+///AJUSTES POSTERIORES 
+/* pendiente en verificacion pondra en rojo la celda y cambiara el estatus en la BD a pendiente y el boton disabled
+   y enabled el boton despachar por si se equivoca el usuario */

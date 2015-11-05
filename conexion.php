@@ -1,7 +1,8 @@
 <?php
 $user = "atf";
 $password = "atf";
-$dbname = "verificacion";
+//$dbname = "verificacion";
+$dbname = "desc_receta";
 $port = "5432";
 $host = "localhost";
 

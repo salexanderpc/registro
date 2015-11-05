@@ -104,6 +104,31 @@ include '../include/banner.php';
 						}
 					});
                         }
+                        
+                        /*Funcion que recibe el id de la receta y una bandera para decidir si es una rece
+                         * receta anulada o procesada */
+                        function ProcesarReceta(id_receta,expediente,bandera)
+                        {
+                        alert("Activaste la funcion Anular()"+id_medicamento);
+                       jQuery.post("procesarTodas.php", {
+						id_receta:id_receta,
+                                                expediente:expediente,
+                                                bandera:bandera
+					}, function(data, textStatus){
+                                            
+						if(data == 1){
+							$('#resultado').html("Datos insertados.");
+							$('#resultado').css('color','green');
+						}
+						else{
+                                                        
+							$('#resultado').html(data);
+							$('#resultado').css('color','red');
+						}
+					});
+                        }
+                        
+                        
    
                         
 		</script>

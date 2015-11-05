@@ -60,6 +60,7 @@ while ($row = pg_fetch_array($resultado)) {
   
     
     $query_recetas = datosReceta($id_des);
+    
     while ($row2 = pg_fetch_array($query_recetas)) {
         $fecha_programada = $row2['fecha_programada'];
         $medicamento = $row2['nombre_medicamento'];
