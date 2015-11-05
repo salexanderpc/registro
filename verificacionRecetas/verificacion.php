@@ -84,12 +84,31 @@ include '../include/banner.php';
 					});
                         }
                         
-                        function Anular(id_medicamento,id_expediente,expediente)
+                        function Pendiente(id_receta,expediente)
                         {
-                        alert("Activaste la funcion Anular()"+id_medicamento);
-                       jQuery.post("procesarAct.php", {
-						id_medicamento:id_medicamento,
-                                                id_expediente:id_expediente,
+                        //alert("Activaste la funcion Pendiente");
+                       jQuery.post("procesarPendiente.php", {
+                                                id_receta:id_receta,
+                                                exp:expediente
+					}, function(data, textStatus){
+                                            
+						if(data == 1){
+							$('#resultado').html("Datos insertados.");
+							$('#resultado').css('color','green');
+						}
+						else{
+                                                        
+							$('#resultado').html(data);
+							$('#resultado').css('color','red');
+						}
+					});
+                        }
+                        
+                        function Activar(id_receta,expediente)
+                        {
+                        //alert("Activaste la funcion Activar()");
+                       jQuery.post("procesarActivacion.php", {
+                                                id_receta:id_receta,
                                                 exp:expediente
 					}, function(data, textStatus){
                                             

@@ -3,19 +3,13 @@
 require 'consulta.php';
 include('../conexion.php');
 $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_last_error());
-$numero_expediente = $_POST['name'];
+$numero_expediente = $_POST['exp'];
 
- 
-//$query = "select  exp.numero_expediente,rec.id as id_medicamento,des.id as id_desc, des.fecha_programada,exp.id as id_expediente,
-//	pac.nombre,m.nombre_medico,esp.nombre_especialidad, med.nombre_medicamento
-//	,rec.cantidad from desc_recetas des
-//	inner join expediente exp on des.expediente_id = exp.id  
-//	inner join paciente pac on exp.paciente_id = pac.id 
-//	inner join medicos m on des.medicos_id = m.id
-//	inner join especialidades esp on des.especialidades_id = esp.id
-//	inner join recetas_programadas rec on des.id = rec.desc_recetas_id
-//	inner join medicamento med on rec.medicamento_id = med.id
-//	where exp.numero_expediente = '$numero_expediente' and transaccion_id = 1 order by des.fecha_programada,id_desc,med.nombre_medicamento";
+$id_receta = $_POST['id_receta'];
+
+$query = "update recetas_programadas set transaccion_id = 6 where id=$id_receta";
+$resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
+
 
 $query = "select des.id as id_desc,exp.numero_expediente,pac.nombre from desc_recetas des inner join expediente exp
             on des.expediente_id = exp.id 
@@ -47,7 +41,7 @@ while ($row = pg_fetch_array($resultado)) {
                                                     <thead>
                                                         <tr>
                                                         
-                                                        <td class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_receta,$numero_expediente,1)\" class=\"btn btn-primary\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Enviar Receta</button></td>
+                                                        <td class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_receta,$numero_expediente,1)\" class=\"btn btn-info\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Enviar Receta</button></td>
                                                         <td class=\"success text-left\"colspan=\"3\"><button type=\"button\" onclick=\"ProcesarReceta($id_receta,$numero_expediente,2)\" class=\"btn btn-warning\">Anular Receta</button></td>
                                                         
                                                         </tr>

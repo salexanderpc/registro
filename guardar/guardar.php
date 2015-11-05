@@ -37,8 +37,8 @@ $especialidad = $_POST['especialidad'];
     }
     
     /*Crear una desc_recetas*/
-    $query = "insert into desc_recetas(expediente_id,especialidades_id,medicos_id,fecha_programada)"
-            . "values($id_expediente,$especialidad,$medicos,'$fecha_programada')";
+    $query = "insert into desc_recetas(transaccion_id,expediente_id,especialidades_id,medicos_id,fecha_programada)"
+            . "values(1,$id_expediente,$especialidad,$medicos,'$fecha_programada')";
     
     $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
     
@@ -99,8 +99,8 @@ $especialidad = $_POST['especialidad'];
         
         
         /*Crear una desc_recetas*/
-    $query = "insert into desc_recetas(expediente_id,especialidades_id,medicos_id,fecha_programada)"
-            . "values($id_expediente,$especialidad,$medicos,'$fecha_programada')";
+    $query = "insert into desc_recetas(transaccion_id,expediente_id,especialidades_id,medicos_id,fecha_programada)"
+            . "values(1,$id_expediente,$especialidad,$medicos,'$fecha_programada')";
     
     $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
     
