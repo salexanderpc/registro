@@ -14,3 +14,7 @@ este boton pondra el id_transaccion en 4 Anulada
 ///AJUSTES POSTERIORES 
 /* pendiente en verificacion pondra en rojo la celda y cambiara el estatus en la BD a pendiente y el boton disabled
    y enabled el boton despachar por si se equivoca el usuario */
+
+
+
+/* Programar el boton anular receta y Enviar Receta */

@@ -7,13 +7,16 @@ $numero_expediente = $_POST['exp'];
 
 $id_receta = $_POST['id_receta'];
 
-$query = "update recetas_programadas set transaccion_id = 1 where id=$id_receta";
+$query = "update recetas_programadas set transaccion_id = 2 where id=$id_receta";
 $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
 
 
-$query = "select des.id as id_desc,exp.numero_expediente,pac.nombre from desc_recetas des inner join expediente exp
+$query = "select des.id as id_desc,exp.numero_expediente,pac.nombre,esp.nombre_especialidad from 
+            desc_recetas des inner join expediente exp
             on des.expediente_id = exp.id 
-            inner join paciente pac on exp.paciente_id = pac.id where exp.numero_expediente = '$numero_expediente' and des.transaccion_id = 1 ";
+            inner join paciente pac on exp.paciente_id = pac.id 
+            inner join especialidades esp on des.especialidades_id = esp.id where exp.numero_expediente = '$numero_expediente'
+         and des.transaccion_id = 1 ";
 
 $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
 
@@ -23,6 +26,7 @@ while ($row = pg_fetch_array($resultado)) {
           $id_desc = $row['id_desc'];
           $numero_expediente = $row['numero_expediente'];
           $nombre =$row['nombre'];
+          $especialidad = $row['nombre_especialidad'];
 //        $numero_expediente = $row['numero_expediente'];
 //        $id_medicamento = $row['id_medicamento'];
 //        $id_desc = $row['id_desc'];
@@ -30,7 +34,7 @@ while ($row = pg_fetch_array($resultado)) {
 //        $fecha_programada = $row['fecha_programada'];
 //        $nombre = $row['nombre'];
 //        $medico = $row['nombre_medico'];
-//        $especialidad = $row['nombre_especialidad'];
+        
 //        $medicamento = $row['nombre_medicamento'];
 //        $cantidad = $row['cantidad'];
         
@@ -41,24 +45,23 @@ while ($row = pg_fetch_array($resultado)) {
                                                     <thead>
                                                         <tr>
                                                         
-                                                        <td class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_receta,$numero_expediente,1)\" class=\"btn btn-info\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Enviar Receta</button></td>
-                                                        <td class=\"success text-left\"colspan=\"3\"><button type=\"button\" onclick=\"ProcesarReceta($id_receta,$numero_expediente,2)\" class=\"btn btn-warning\">Anular Receta</button></td>
+                                                        <td class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_desc,$numero_expediente,1)\" class=\"btn btn-primary\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Enviar Receta</button></td>
+                                                        <td class=\"success text-left\"colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_desc,$numero_expediente,2)\" class=\"btn btn-warning\">Anular Receta</button></td>
                                                         
                                                         </tr>
                                                         <tr>
-                                                        <th colspan=\"3\" class=\"success\">
+                                                        <th colspan=\"2\" class=\"success\">
                                                         N° Expediente : &nbsp;&nbsp;&nbsp;<mark>$numero_expediente</mark>
                                                         </th>
-                                                        <th colspan=\"1\" class=\"text-right success\">Nombre : </th>
-                                                        <td colspan=\"3\" class=\"success\"><mark>$nombre</mark></td>
+                                                        <th colspan=\"2\" class=\"text-left success\">Nombre : <mark>$nombre</mark></th>
+                                                        <th colspan=\"3\" class=\"success\">Especialidad : <mark>$especialidad</mark></th>
                                                         </tr>
-                                                        <tr class=\"info\">
+                                                        <tr class=\"warning\">
                                                             <th class=\"col-md-1 text-center\">Fecha<br>Programada</th>
                                                             <th class=\"col-md-3 text-center\">Medicamento</th>
                                                             <th class=\"col-md-1 text-center\">Cantidad</th>
                                                             <th class=\"col-md-3 text-center\">Médico</th>
-                                                            <th class=\"col-md-2 text-center\">Especialidad</th>
-                                                            <th colspan=\"2\" class=\"text-center\">Opción</th>
+                                                            <th colspan=\"3\" class=\"text-center\">Opción</th>
                                                         </tr>
                                                     </thead><tbody>";
         $query_recetas = datosRecetaActivar($id_desc,$numero_expediente);
@@ -82,31 +85,44 @@ while ($row = pg_fetch_array($resultado)) {
         <td class=\"text-center\"><small>$medicamento</small></td>
         <td class=\"text-center\"><small>$cantidad</small></td>
         <td class=\"text-center\"><small>$medico</small></td>
-        <td class=\"text-center\"><small>$especialidad</small></td>
-        <td><button class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
+        <td class=\"text-center\"><button class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
-                <td><button disabled class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,$id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+        <td class=\"text-center\"><button disabled class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,$id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
             </tr>";
         }
-        else
-        {
-            $imp.="<tr>
+        
+           else
+            {
+                 $imp.="<tr class=\"info\">
         <td class=\"text-center\"><small>$fecha</small></td>
         <td class=\"text-center\"><small>$medicamento</small></td>
         <td class=\"text-center\"><small>$cantidad</small></td>
         <td class=\"text-center\"><small>$medico</small></td>
-        <td class=\"text-center\"><small>$especialidad</small></td>
-        <td><button class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
+        <td class=\"text-center\"><button disabled class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
-                <td><button class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,'$numero_expediente')\" type=\"submit\">
+        <td class=\"text-center\"><button class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
             </tr>";
-        }
+            }
+
+//        {
+//            $imp.="<tr >
+//        <td class=\"text-center\"><small>$fecha</small></td>
+//        <td class=\"text-center\"><small>$medicamento</small></td>
+//        <td class=\"text-center\"><small>$cantidad</small></td>
+//        <td class=\"text-center\"><small>$medico</small></td>
+//        <td class=\"text-center\"><small>$especialidad</small></td>
+//        <td><button class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
+//                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
+//                <td><button class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,'$numero_expediente')\" type=\"submit\">
+//                <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
+//            </tr>";
+//        }
         
         }
         
-        $imp.="<tr><td colspan=\"7\" class=\"info\"></td></tr></tbody></table>";
+        $imp.="<tr><td colspan=\"7\" class=\"warning\"><br></td></tr></tbody></table>";
 
     }
  
