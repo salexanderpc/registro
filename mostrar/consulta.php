@@ -16,7 +16,7 @@ function datosReceta($id_des) {
                         inner join medicos m on des.medicos_id = m.id 
                         inner join medicamento med on rec.medicamento_id = med.id
                         inner join expediente exp on des.expediente_id = exp.id
-                        inner join paciente pac on exp.paciente_id = pac.id where rec.recepcion=TRUE and des.id = $id_des order by des.id";
+                        inner join paciente pac on exp.paciente_id = pac.id where des.id = $id_des order by des.id";
         $respuesta = pg_query($conexion, $query_mostrar) or die("Error en la Consulta SQL");
         return($respuesta);
     }

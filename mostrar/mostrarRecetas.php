@@ -132,9 +132,11 @@ $("#resultado").load("cargarRecetas.php");
         </div>
     
       
-
-
         <br>
+        <div class="container">
+            <h3><p align="center" class="bg-info">Despacho de Medicamentos</p></h3>
+        </div>
+        
         <br>
     <div class="row">
         <div class="col-md-1"></div>

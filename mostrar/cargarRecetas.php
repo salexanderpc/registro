@@ -4,41 +4,50 @@ require 'consulta.php';
     include('../conexion.php');
     $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_last_error());
     
-$query_mostrar= "select des.id as id_des,rec.id,des.expediente_id,des.fecha_programada,pac.nombre,esp.nombre_especialidad,m.nombre_medico,med.nombre_medicamento,exp.numero_expediente
-from desc_recetas des inner join recetas_programadas rec
-on rec.desc_recetas_id = des.id
-inner join especialidades esp on des.especialidades_id = esp.id 
-inner join medicos m on des.medicos_id = m.id 
-inner join medicamento med on rec.medicamento_id = med.id
-inner join expediente exp on des.expediente_id = exp.id
-inner join paciente pac on exp.paciente_id = pac.id where rec.recepcion=TRUE order by des.id";
+    
+    //hacer la consulta con las restricciones que tenga transaccion_id = 6 o transacción id = 3
+$query_mostrar= "select des.id as id_desc,exp.numero_expediente,pac.nombre,esp.nombre_especialidad from 
+            desc_recetas des inner join expediente exp
+            on des.expediente_id = exp.id 
+            inner join paciente pac on exp.paciente_id = pac.id 
+            inner join especialidades esp on des.especialidades_id = esp.id where 
+             des.transaccion_id = 3 or des.transaccion_id = 6 ";
 
 $resultado = pg_query($conexion, $query_mostrar) or die("Error en la Consulta SQL");
 
 $imp="";
 while ($row = pg_fetch_array($resultado)) {
-    $nombre_medicamento = $row['nombre_medicamento'];
-    $id_des = $row['id_des'];
+    $especialidad = $row['nombre_especialidad'];
+    $id_des = $row['id_desc'];
     $nombre = $row['nombre'];
     $num_exp = $row['numero_expediente'];
-    $imp.= "<table class=\"table table-bordered table-hover\">
-                                                    <caption><button type=\"button\" class=\"btn btn-info\">Despachar Todo</button></caption>
+    
+    //En este bucle hacer la consulta y tomar en cuenta si la consulta devuelve mas resultados y 
+    //que el estado de la receta no sea pendiente.
+    
+    $imp.= "<table class=\"table table-bordered \">
+                                                    <caption>
+                                                    </caption>
                                                     <thead>
                                                         <tr>
-                                                        <th colspan=\"1\" class=\"success\">
-                                                        Nombre :
-                                                        </th>
-                                                        <td class=\"success\" colspan=\"3\">$nombre</td>
-                                                        <th colspan=\"1\" class=\"text-right success\">N° Expediente : </th>
-                                                        <td colspan=\"2\" class=\"success\">$num_exp</td>
+                                                        
+                                                        <td bgcolor=\"\" class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_desc,$numero_expediente,1)\" class=\"btn btn-primary\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Despachar Receta</button></td>
+                                                        <td class=\"success text-left\"colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_desc,$numero_expediente,2)\" class=\"btn btn-warning\">Anular Receta</button></td>
+                                                        
                                                         </tr>
-                                                        <tr class=\"info\">
+                                                        <tr>
+                                                        <th colspan=\"2\" class=\"success\">
+                                                        N° Expediente : &nbsp;&nbsp;&nbsp;<mark>$num_exp</mark>
+                                                        </th>
+                                                        <th colspan=\"2\" class=\"text-left success\">Nombre : <mark>$nombre</mark></th>
+                                                        <th colspan=\"3\" class=\"success\">Especialidad : <mark>$especialidad</mark></th>
+                                                        </tr>
+                                                        <tr class=\"warning\">
                                                             <th class=\"col-md-1 text-center\">Fecha<br>Programada</th>
                                                             <th class=\"col-md-3 text-center\">Medicamento</th>
                                                             <th class=\"col-md-1 text-center\">Cantidad</th>
                                                             <th class=\"col-md-3 text-center\">Médico</th>
-                                                            <th class=\"col-md-2 text-center\">Especialidad</th>
-                                                            <th colspan=\"2\" class=\"text-center\">Opción</th>
+                                                            <th colspan=\"3\" class=\"text-center\">Opción</th>
                                                         </tr>
                                                     </thead><tbody>";
   
@@ -52,20 +61,36 @@ while ($row = pg_fetch_array($resultado)) {
         $medico = $row2['nombre_medico'];
         $especialidad = $row2['nombre_especialidad'];
         
-            $imp.="<tr>
-        <td class=\"text-center\">$fecha_programada</td>
-        <td class=\"text-center\">$nombre_medicamento</td>
-        <td class=\"text-center\">$cantidad</td>
-        <td class=\"text-center\">$medico</td>
-        <td class=\"text-center\">$especialidad</td>
-        <td><button class=\"btn btn-info\" onclick=\"miFuncion($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+            $fecha = date("d-m-Y", strtotime($fecha_programada));
+        if($id_transaccion==6)
+        {
+            $imp.="<tr class=\"danger\">
+        <td class=\"text-center\"><small>$fecha</small></td>
+        <td class=\"text-center\"><small>$medicamento</small></td>
+        <td class=\"text-center\"><small>$cantidad</small></td>
+        <td class=\"text-center\"><small>$medico</small></td>
+        <td class=\"text-center\"><button class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
-                <td><button class=\"btn btn-danger\" onclick=\"Anular($id_medicamento,$id_expediente,'$numero_expediente')\" type=\"submit\">
+                <td class=\"text-center\" ><button disabled class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
             </tr>";
+        }
+        else
+        {
+            $imp.="<tr class=\"info\">
+        <td class=\"text-center\"><small>$fecha</small></td>
+        <td class=\"text-center\"><small>$medicamento</small></td>
+        <td class=\"text-center\"><small>$cantidad</small></td>
+        <td class=\"text-center\"><small>$medico</small></td>
+        <td class=\"text-center\"><button disabled  class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
+                <td class=\"text-center\"><button data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tooltip on top\" class=\"btn btn-danger\" onclick=\"Pendiente($id_medicamento,'$numero_expediente')\" type=\"submit\">
+                <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
+            </tr>";
+        }
     }
     
-    $imp.="</tbody></table>";
+    $imp.="<tr><td colspan=\"7\" class=\"warning\"><br></td></tr></tbody></table><hr>";
     
 
        

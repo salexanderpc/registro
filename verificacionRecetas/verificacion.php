@@ -109,6 +109,7 @@ function acceptNum(evt){
                                                         setTimeout(function () {
                 $('#cargador').hide();
                 $('#resultado').html(data);
+                $('#resultado').show();
             }, 200);
 						}
 					});

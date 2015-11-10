@@ -15,8 +15,8 @@ $query = "select des.id as id_desc,exp.numero_expediente,pac.nombre,esp.nombre_e
             desc_recetas des inner join expediente exp
             on des.expediente_id = exp.id 
             inner join paciente pac on exp.paciente_id = pac.id 
-            inner join especialidades esp on des.especialidades_id = esp.id where exp.numero_expediente = '$numero_expediente'"
-        . " and des.transaccion_id = 1 ";
+            inner join especialidades esp on des.especialidades_id = esp.id where exp.numero_expediente = '$numero_expediente'
+            and des.transaccion_id = 1 or des.transaccion_id = 6 ";
 
 $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
 
