@@ -30,6 +30,10 @@ if($bandera == 1)
        // echo 'pendientes';
         $query = "update recetas_programadas set transaccion_id = 3 where desc_recetas_id = $id_receta and transaccion_id <> 6";
         $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
+        
+        /* Crear Consulta para actualizar a el estado de transaccion_id de desc_receta */
+        $query = "update desc_recetas set transaccion_id = 6 where id = $id_receta";
+        $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
     }
     else
     {
