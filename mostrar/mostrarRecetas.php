@@ -35,7 +35,8 @@ include '../include/banner.php';
         
         <script language="javascript">
            $(document).ready(function(){
-setInterval(loadClima,1000);
+//setInterval(loadClima,100000);
+$("#resultado").load("cargarRecetas.php");
 });
 
 function loadClima(){
@@ -44,76 +45,73 @@ $("#resultado").load("cargarRecetas.php");
 
 </script>
         <script type="text/javascript">
-			$('document').ready(function(){
-				$('#boton').click(function(){
-					if($('#expediente').val()==""){
-						alert("Introduce el nombre");
-						return false;
-					}
-					else{
-						var expediente = $('#expediente').val();
-					}
-					
-					jQuery.post("procesar.php", {
-						name:expediente
-					}, function(data, textStatus){
-                                            
-						if(data == 1){
-							$('#resultado').html("Datos insertados.");
-							$('#resultado').css('color','green');
-						}
-						else{
-                                                        
-							$('#resultado').html(data);
-							$('#resultado').css('color','red');
-						}
-					});
-				});
-                                
-                                
-			}
-                                );
-                        
-                        function miFuncion(id_medicamento,id_expediente,expediente)
+			//$('document').ready(function(){}
+				/* Pone el estado del medicamento como pendiente */
+                        function PendienteDesp(id_receta,expediente)
                         {
-                        alert("Activaste la funcion miFuncion()"+id_medicamento);
-                       jQuery.post("procesarAct.php", {
-						id_medicamento:id_medicamento,
-                                                id_expediente:id_expediente,
-                                                exp:expediente
-					}, function(data, textStatus){
-                                            
-						if(data == 1){
-							$('#resultado').html("Datos insertados.");
-							$('#resultado').css('color','green');
-						}
-						else{
-                                                        
-							$('#resultado').html(data);
-							$('#resultado').css('color','red');
-						}
-					});
+                        alert("Activaste la funcion Pendiente");
+//                       jQuery.post("procesarPendienteDesp.php", {
+//                                                id_receta:id_receta,
+//                                                exp:expediente
+//					}, function(data, textStatus){
+//                                            
+//						if(data == 1){
+//							$('#resultado').html("Datos insertados.");
+//							$('#resultado').css('color','green');
+//						}
+//						else{
+//                                                            $('#cargador').hide();
+//                                                            $('#resultado').html(data);
+//                                                       
+//						}
+//					});
                         }
                         
-                        function Anular(id_medicamento,id_expediente,expediente)
+                        /* Pone el estado de la receta en activa para que sea procesada */
+                        function Activar(id_receta,expediente)
                         {
-                        alert("Activaste la funcion Anular()"+id_medicamento);
-                       jQuery.post("procesarAct.php", {
-						id_medicamento:id_medicamento,
-                                                id_expediente:id_expediente,
-                                                exp:expediente
-					}, function(data, textStatus){
-                                            
-						if(data == 1){
-							$('#resultado').html("Datos insertados.");
-							$('#resultado').css('color','green');
-						}
-						else{
-                                                        
-							$('#resultado').html(data);
-							$('#resultado').css('color','red');
-						}
-					});
+                        alert("Activaste la funcion Activar()");
+//                       jQuery.post("procesarActivacionDesp.php", {
+//                                                id_receta:id_receta,
+//                                                exp:expediente
+//					}, function(data, textStatus){
+//                                            
+//						if(data == 1){
+//							$('#resultado').html("Datos insertados.");
+//							$('#resultado').css('color','green');
+//						}
+//						else{
+//                                                        
+//							$('#resultado').html(data);
+//							$('#resultado').css('color','red');
+//						}
+//					});
+                        }
+                        
+                        /*Funcion que recibe el id de la receta y una bandera para decidir si es una rece
+                         * receta anulada o procesada */
+                        function ProcesarReceta(id_receta,expediente,bandera)
+                        {
+                        alert("Activaste la funcion Procesar Receta"+bandera);
+//                       jQuery.post("procesarTodas.php", {
+//						id_receta_desc:id_receta,
+//                                                expediente:expediente,
+//                                                bandera:bandera
+//					}, function(data, textStatus){
+//                                            
+//						if(data == 1){
+//							$('#resultado').html("Datos insertados.");
+//							$('#resultado').css('color','green');
+//						}
+//						else{
+//                                                        
+//							//$('#resultado').html(data);
+//                                                        $('#resultado').hide();
+//                                                        $('expediente').val('');
+//                                                        $('#expediente').focus();
+//							$('#resultado').css('color','red');
+//						}
+//					});
                         }
    
                         

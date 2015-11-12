@@ -9,7 +9,7 @@
 function datosReceta($id_des) {
         include('../conexion.php');
          $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_last_error());
-        $query_mostrar = "select des.id,rec.id,rec.cantidad,des.expediente_id,des.fecha_programada,pac.nombre,esp.nombre_especialidad,m.nombre_medico,med.nombre_medicamento,exp.numero_expediente
+        $query_mostrar = "select des.id,rec.id as id_medicina,rec.cantidad,des.expediente_id,des.fecha_programada,pac.nombre,esp.nombre_especialidad,m.nombre_medico,med.nombre_medicamento,exp.numero_expediente
                         from desc_recetas des inner join recetas_programadas rec
                         on rec.desc_recetas_id = des.id
                         inner join especialidades esp on des.especialidades_id = esp.id 
