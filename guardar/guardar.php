@@ -53,7 +53,7 @@ $especialidad = $_POST['especialidad'];
     /*ingresar recetas_programadas*/
      for ($i = 0; $i < count($medicamentos); $i++) {
          $query = "insert into recetas_programadas(transaccion_id,desc_recetas_id,medicamento_id,cantidad,recepcion,despacho,fecha_retiro)"
-                 . "values(1,$id_desc,$medicamentos[$i],$cantidad[$i],'FALSE','FALSE','$fecha_retiro')";
+                 . "values(2,$id_desc,$medicamentos[$i],$cantidad[$i],'FALSE','FALSE','$fecha_retiro')";
          
          $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
      }

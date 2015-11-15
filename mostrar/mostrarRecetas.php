@@ -35,7 +35,7 @@ include '../include/banner.php';
         
         <script language="javascript">
            $(document).ready(function(){
-//setInterval(loadClima,100000);
+//setInterval(loadClima,1000);
 $("#resultado").load("cargarRecetas.php");
 });
 
@@ -49,12 +49,12 @@ $("#resultado").load("cargarRecetas.php");
 				/* Pone el estado del medicamento como pendiente */
                         function PendienteDesp(id_receta,expediente)
                         {
-                        alert("Activaste la funcion Pendiente");
-//                       jQuery.post("procesarPendienteDesp.php", {
-//                                                id_receta:id_receta,
-//                                                exp:expediente
-//					}, function(data, textStatus){
-//                                            
+//                        alert("Activaste la funcion Pendiente");
+                       jQuery.post("procesarPendienteDesp.php", {
+                                                id_receta:id_receta,
+                                                exp:expediente
+					}, function(data, textStatus){
+                                            $("#resultado").load("cargarRecetas.php");
 //						if(data == 1){
 //							$('#resultado').html("Datos insertados.");
 //							$('#resultado').css('color','green');
@@ -64,18 +64,20 @@ $("#resultado").load("cargarRecetas.php");
 //                                                            $('#resultado').html(data);
 //                                                       
 //						}
-//					});
+					});
                         }
                         
                         /* Pone el estado de la receta en activa para que sea procesada */
-                        function Activar(id_receta,expediente)
+                        function ActivarDesp(id_receta,expediente)
                         {
-                        alert("Activaste la funcion Activar()");
-//                       jQuery.post("procesarActivacionDesp.php", {
-//                                                id_receta:id_receta,
-//                                                exp:expediente
-//					}, function(data, textStatus){
-//                                            
+//                        alert("Activaste la funcion Activar()");
+                       jQuery.post("procesarActivacionDesp.php", {
+                                                id_receta:id_receta,
+                                                exp:expediente
+					}, function(data, textStatus){
+                                            
+                                            $("#resultado").load("cargarRecetas.php");
+                                            
 //						if(data == 1){
 //							$('#resultado').html("Datos insertados.");
 //							$('#resultado').css('color','green');
@@ -85,20 +87,21 @@ $("#resultado").load("cargarRecetas.php");
 //							$('#resultado').html(data);
 //							$('#resultado').css('color','red');
 //						}
-//					});
+					});
                         }
                         
                         /*Funcion que recibe el id de la receta y una bandera para decidir si es una rece
                          * receta anulada o procesada */
-                        function ProcesarReceta(id_receta,expediente,bandera)
+                        function ProcesarRecetaDesp(id_receta,expediente,bandera)
                         {
                         alert("Activaste la funcion Procesar Receta"+bandera);
-//                       jQuery.post("procesarTodas.php", {
-//						id_receta_desc:id_receta,
-//                                                expediente:expediente,
-//                                                bandera:bandera
-//					}, function(data, textStatus){
-//                                            
+                       jQuery.post("procesarTodasDesp.php", {
+						id_receta_desc:id_receta,
+                                                expediente:expediente,
+                                                bandera:bandera
+					}, function(data, textStatus){
+                                            $("#resultado").load("cargarRecetas.php");
+//                                            $("#resultado").load("cargarRecetas.php");
 //						if(data == 1){
 //							$('#resultado').html("Datos insertados.");
 //							$('#resultado').css('color','green');
@@ -111,7 +114,7 @@ $("#resultado").load("cargarRecetas.php");
 //                                                        $('#expediente').focus();
 //							$('#resultado').css('color','red');
 //						}
-//					});
+					});
                         }
    
                         

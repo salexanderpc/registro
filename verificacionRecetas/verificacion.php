@@ -172,6 +172,7 @@ function acceptNum(evt){
 						if(data == 1){
 							$('#resultado').html("Datos insertados.");
 							$('#resultado').css('color','green');
+                                                       
 						}
 						else{
                                                         

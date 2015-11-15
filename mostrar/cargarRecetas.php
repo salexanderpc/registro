@@ -11,7 +11,7 @@ $query_mostrar= "select des.id as id_desc,exp.numero_expediente,pac.nombre,esp.n
             on des.expediente_id = exp.id 
             inner join paciente pac on exp.paciente_id = pac.id 
             inner join especialidades esp on des.especialidades_id = esp.id where 
-             des.transaccion_id = 3 or des.transaccion_id = 6 ";
+             des.transaccion_id = 3";
 
 $resultado = pg_query($conexion, $query_mostrar) or die("Error en la Consulta SQL");
 
@@ -25,14 +25,22 @@ while ($row = pg_fetch_array($resultado)) {
     //En este bucle hacer la consulta y tomar en cuenta si la consulta devuelve mas resultados y 
     //que el estado de la receta no sea pendiente.
     
+    $query_recetas = datosReceta($id_des);
+    
+    $hay_datos = pg_num_rows($query_recetas);
+    if($hay_datos == 0)
+    {
+        continue;
+    }
+    
     $imp.= "<table class=\"table table-bordered \">
                                                     <caption>
                                                     </caption>
                                                     <thead>
                                                         <tr>
                                                         
-                                                        <td bgcolor=\"\" class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_desc,$numero_expediente,1)\" class=\"btn btn-primary\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Despachar Receta</button></td>
-                                                        <td class=\"success text-left\"colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_desc,$numero_expediente,2)\" class=\"btn btn-warning\">Anular Receta</button></td>
+                                                        <td bgcolor=\"\" class=\"success text-left\" colspan=\"4\"><button type=\"button\" onclick=\"ProcesarRecetaDesp($id_des,$num_exp,1)\" class=\"btn btn-primary\"><i class=\"fa fa-share\"></i>&nbsp;&nbsp;Despachar Receta</button></td>
+                                                        <td class=\"success text-left\"colspan=\"4\"><button type=\"button\" onclick=\"ProcesarReceta($id_des,$num_exp,2)\" class=\"btn btn-warning\">Anular Receta</button></td>
                                                         
                                                         </tr>
                                                         <tr>
@@ -52,7 +60,7 @@ while ($row = pg_fetch_array($resultado)) {
                                                     </thead><tbody>";
   
     
-    $query_recetas = datosReceta($id_des);
+    
     
     while ($row2 = pg_fetch_array($query_recetas)) {
         $fecha_programada = $row2['fecha_programada'];
@@ -62,6 +70,7 @@ while ($row = pg_fetch_array($resultado)) {
         $especialidad = $row2['nombre_especialidad'];
         $numero_expediente = $row2['numero_expediente'];
         $id_medicamento = $row2['id_medicina'];
+        $id_transaccion = $row2['transaccion_id'];
         
             $fecha = date("d-m-Y", strtotime($fecha_programada));
         if($id_transaccion==6)
@@ -71,7 +80,7 @@ while ($row = pg_fetch_array($resultado)) {
         <td class=\"text-center\"><small>$medicamento</small></td>
         <td class=\"text-center\"><small>$cantidad</small></td>
         <td class=\"text-center\"><small>$medico</small></td>
-        <td class=\"text-center\"><button class=\"btn btn-info\" onclick=\"Activar($id_medicamento,'$numero_expediente')\" type=\"submit\">
+        <td class=\"text-center\"><button class=\"btn btn-info\" onclick=\"ActivarDesp($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>&nbsp;Despachar</button></td>   
                 <td class=\"text-center\" ><button disabled class=\"btn btn-danger\" onclick=\"PendienteDesp($id_medicamento,'$numero_expediente')\" type=\"submit\">
                 <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp;Pendiente</button></td>
