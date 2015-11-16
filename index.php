@@ -97,6 +97,7 @@ function Medico() {
                 <li role="presentation" class="active"><a href="#">Ingreso</a></li>
                 <li role="presentation"><a href="verificacionRecetas/verificacion.php">Verificación Recetas</a></li>
                 <li role="presentation"><a href="mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
+                <li role="presentation"><a href="../consejeria/consejeria.php">Atención Farmacéutica</a></li>
             </ul>
         </div>
         </div>

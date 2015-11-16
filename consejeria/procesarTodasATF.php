@@ -15,7 +15,10 @@ $bandera = $_POST['bandera'];
 
 if($bandera == 1)
 {
-    /* verificar si hay recetas con estado pendiente */
+    /* verificar si hay recetas con estado pendiente 
+     * 
+     */
+    
     
      
     //echo 'Hacer Procesos para poner la receta en estado de enviar a atf';
@@ -30,18 +33,18 @@ if($bandera == 1)
     
     if($pendientes == 0 )
     {
-        //no hay pendientes poner des.id = 4 //activada en atf
-        $query = "update recetas_programadas set transaccion_id = 4 where desc_recetas_id = $id_receta and transaccion_id not in (6,7)";
+        //no hay pendientes poner des.id = 7 //finalizada
+        $query = "update recetas_programadas set transaccion_id = 7 where desc_recetas_id = $id_receta";
         $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
         
         /* Crear Consulta para actualizar a el estado de transaccion_id de desc_receta */
-        $query = "update desc_recetas set transaccion_id = 4 where id = $id_receta";
+        $query = "update desc_recetas set transaccion_id = 7 where id = $id_receta";
         $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
     }
  else 
      {
         /* hay recetas por activar y no se sabe si hay pendientes pero se procesara*/
-        $query = "update recetas_programadas set transaccion_id = 4 where desc_recetas_id = $id_receta and transaccion_id <> 6 ";
+        $query = "update recetas_programadas set transaccion_id = 7 where desc_recetas_id = $id_receta and transaccion_id <> 6 ";
         $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
      
      

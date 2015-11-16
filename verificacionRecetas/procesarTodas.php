@@ -35,7 +35,7 @@ if($bandera == 1)
     if($activar>0)
     {
         /* hay recetas por activar y no se sabe si hay pendientes pero se procesara*/
-        $query = "update recetas_programadas set transaccion_id = 3 where desc_recetas_id = $id_receta and transaccion_id not in (4,6) ";
+        $query = "update recetas_programadas set transaccion_id = 3 where desc_recetas_id = $id_receta and transaccion_id not in (4,6,7) ";
         $resultado = pg_query($conexion, $query) or die("Error en la Consult SQL");
         
         /* ver si hay recetas con estado 6 asi poner EG = 6 si no hay poner EG = 3 */

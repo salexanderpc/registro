@@ -1,4 +1,14 @@
 
+Cambios 15/11/2015
+
+-- Programar Anular Receta
+-- Agregar a BD fecha_hora_activacion
+-- Agregar a BD fecha_hora_despacho
+-- Agregar a BD fecha_hora_atencion
+-- Programar boton de depachar
+
+
+-----------------------------------------------------------------------------
 /* Crear funcion para guardar cuando se despacha*/
 /* Crear pantalla para atf */
 /* Crear una pantalla para buscar recetas anuladas por numero de expediente para que se activen */
@@ -7,14 +17,13 @@
 /* Despachar Todo */
 este boton enviara la receta y pondra en true recepcion y el id_transaccion en 2
 
-/* Anular Receta */
-este boton pondra el id_transaccion en 4 Anulada
-
 
 ///AJUSTES POSTERIORES 
 /* pendiente en verificacion pondra en rojo la celda y cambiara el estatus en la BD a pendiente y el boton disabled
    y enabled el boton despachar por si se equivoca el usuario */
 
-
-
 /* Programar el boton anular receta y Enviar Receta */
+
+
+------------------------------------------------------------------------------
+

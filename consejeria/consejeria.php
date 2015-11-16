@@ -5,7 +5,7 @@ include '../include/banner.php';
 ?>
 <html>
     <head>
-        <title>.:::VERIFICACIÓN:::.</title>
+        <title>.:::ATF:::.</title>
         <link rel="stylesheet" href="../public/validation/vendor/bootstrap/css/bootstrap.css"/>
         <link rel="stylesheet" href="../public/validation/dist/css/formValidation.css"/>
         <script type="text/javascript" src="../public/validation/vendor/jquery/jquery.min.js"></script>
@@ -36,11 +36,11 @@ include '../include/banner.php';
         <script language="javascript">
            $(document).ready(function(){
 //setInterval(loadClima,1000);
-$("#resultado").load("cargarRecetas.php");
+$("#resultado").load("cargarPacientes.php");
 });
 
 function loadClima(){
-$("#resultado").load("cargarRecetas.php");
+$("#resultado").load("cargarPacientes.php");
 }
 
 </script>
@@ -54,7 +54,7 @@ $("#resultado").load("cargarRecetas.php");
                                                 id_receta:id_receta,
                                                 exp:expediente
 					}, function(data, textStatus){
-                                            $("#resultado").load("cargarRecetas.php");
+                                            $("#resultado").load("cargarPacientes.php");
 //						if(data == 1){
 //							$('#resultado').html("Datos insertados.");
 //							$('#resultado').css('color','green');
@@ -76,7 +76,7 @@ $("#resultado").load("cargarRecetas.php");
                                                 exp:expediente
 					}, function(data, textStatus){
                                             
-                                            $("#resultado").load("cargarRecetas.php");
+                                            $("#resultado").load("cargarPacientes.php");
                                             
 //						if(data == 1){
 //							$('#resultado').html("Datos insertados.");
@@ -92,15 +92,15 @@ $("#resultado").load("cargarRecetas.php");
                         
                         /*Funcion que recibe el id de la receta y una bandera para decidir si es una rece
                          * receta anulada o procesada */
-                        function ProcesarRecetaDesp(id_receta,expediente,bandera)
+                        function ProcesarRecetaATF(id_receta,expediente,bandera)
                         {
-                        alert("Activaste la funcion Procesar Receta"+bandera);
-                       jQuery.post("procesarTodasDesp.php", {
+                        alert("Activaste la funcion ProcesarATF"+bandera);
+                       jQuery.post("procesarTodasATF.php", {
 						id_receta_desc:id_receta,
                                                 expediente:expediente,
                                                 bandera:bandera
 					}, function(data, textStatus){
-                                            $("#resultado").load("cargarRecetas.php");
+                                            $("#resultado").load("cargarPacientes.php");
 //                                            $("#resultado").load("cargarRecetas.php");
 //						if(data == 1){
 //							$('#resultado').html("Datos insertados.");
@@ -127,8 +127,8 @@ $("#resultado").load("cargarRecetas.php");
             <ul class="nav nav-tabs">
                 <li role="presentation"><a href="../index.php">Ingreso</a></li>
                 <li role="presentation"><a href="../verificacionRecetas/verificacion.php">Verificación Recetas</a></li>
-                <li role="presentation" class="active"><a href="../mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
-                <li role="presentation"><a href="../consejeria/consejeria.php">Atención Farmacéutica</a></li>
+                <li role="presentation"><a href="../mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
+                <li role="presentation" class="active"><a href="#">Atención Farmacéutica</a></li>
             </ul>
         </div>
         </div>
@@ -136,7 +136,7 @@ $("#resultado").load("cargarRecetas.php");
       
         <br>
         <div class="container">
-            <h3><p align="center" class="bg-info">Despacho de Medicamentos</p></h3>
+            <h3><p align="center" class="bg-info">PACIENTES</p></h3>
         </div>
         
         <br>
@@ -148,6 +148,27 @@ $("#resultado").load("cargarRecetas.php");
         <div class="col-md-1"></div>
     </div>
     <span id="res"></span>
+    
+    <!-- Button HTML (to Trigger Modal) -->
+    <!--<a href="../bootstrap/remote.php" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal">Launch Demo Modal</a>-->
+    
+    <!-- Modal HTML -->
+<!--    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                 Content will be loaded here from "remote.php" file 
+            </div>
+        </div>
+    </div>-->
+
+<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      
+    </div>
+  </div>
+</div>
+
     </body>
 </html>
 

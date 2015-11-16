@@ -200,6 +200,7 @@ function acceptNum(evt){
                 <li role="presentation"><a href="../index.php">Ingreso</a></li>
                 <li role="presentation" class="active"><a href="#">Verificación Recetas</a></li>
                 <li role="presentation"><a href="../mostrar/mostrarRecetas.php">Mostrar Recetas</a></li>
+                <li role="presentation"><a href="../consejeria/consejeria.php">Atención Farmacéutica</a></li>
             </ul>
         </div>
         </div>
